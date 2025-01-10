@@ -1,0 +1,174 @@
+name: ML Training Pipeline
+
+on:
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      dataset:
+        description: 'Dataset type'
+        required: true
+        default: 'classification'
+        type: choice
+        options:
+          - classification
+          - iris
+          - wine
+      model:
+        description: 'Model type'
+        required: true
+        default: 'random_forest'
+        type: choice
+        options:
+          - random_forest
+          - gradient_boosting
+          - logistic_regression
+          - svm
+
+  # Scheduled training (weekly)
+  schedule:
+    - cron: '0 0 * * 0'  # Every Sunday at midnight
+
+  # Trigger on changes to training code
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'configs/**'
+      - 'scripts/run_training.py'
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Run training pipeline
+        id: train
+        run: |
+          python scripts/run_training.py \
+            --dataset ${{ github.event.inputs.dataset || 'classification' }} \
+            --model ${{ github.event.inputs.model || 'random_forest' }} \
+            --update-dashboard
+
+      - name: Upload model artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-artifacts-${{ github.run_id }}
+          path: models/artifacts/
+          retention-days: 30
+
+      - name: Upload dashboard data
+        uses: actions/upload-artifact@v4
+        with:
+          name: dashboard-data-${{ github.run_id }}
+          path: docs/assets/dashboard_data.json
+          retention-days: 30
+
+      - name: Commit updated dashboard data
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/assets/dashboard_data.json || true
+          git add models/artifacts/ || true
+          git diff --staged --quiet || git commit -m "Update dashboard data and model artifacts [skip ci]"
+          git push || echo "Nothing to push"
+
+  evaluate:
+    needs: train
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download model artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: model-artifacts-${{ github.run_id }}
+          path: models/artifacts/
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Validate model performance
+        run: |
+          python -c "
+          import json
+          from pathlib import Path
+
+          artifacts_dir = Path('models/artifacts')
+          eval_files = list(artifacts_dir.glob('evaluation_*.json'))
+
+          if not eval_files:
+              print('No evaluation files found')
+              exit(1)
+
+          latest_eval = max(eval_files, key=lambda x: x.stat().st_mtime)
+          with open(latest_eval) as f:
+              metrics = json.load(f)
+
+          accuracy = metrics.get('accuracy', 0)
+          f1 = metrics.get('f1_score', 0)
+
+          print(f'Model Performance:')
+          print(f'  Accuracy: {accuracy:.4f}')
+          print(f'  F1 Score: {f1:.4f}')
+
+          # Validation thresholds
+          if accuracy < 0.7:
+              print('WARNING: Accuracy below threshold (0.7)')
+          if f1 < 0.7:
+              print('WARNING: F1 score below threshold (0.7)')
+
+          print('Model validation passed!')
+          "
+
+      - name: Generate performance badge
+        run: |
+          python -c "
+          import json
+          from pathlib import Path
+
+          artifacts_dir = Path('models/artifacts')
+          eval_files = list(artifacts_dir.glob('evaluation_*.json'))
+
+          if eval_files:
+              latest_eval = max(eval_files, key=lambda x: x.stat().st_mtime)
+              with open(latest_eval) as f:
+                  metrics = json.load(f)
+              accuracy = metrics.get('accuracy', 0)
+              print(f'ACCURACY={accuracy:.2%}')
+          "

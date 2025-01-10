@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLOps Dashboard - GitHub Actions</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">MLOps</span>
+            <span class="subtitle">GitHub Actions</span>
+        </div>
+        <div class="nav-links">
+            <a href="#overview" class="nav-link active">Overview</a>
+            <a href="#pipeline" class="nav-link">Pipeline</a>
+            <a href="#metrics" class="nav-link">Metrics</a>
+            <a href="#features" class="nav-link">Features</a>
+            <a href="https://github.com/bkiritom8/mlops-github-actions" class="nav-link github-link" target="_blank">GitHub</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="overview" class="hero">
+            <div class="hero-content">
+                <h1>End-to-End MLOps Pipeline</h1>
+                <p class="hero-subtitle">Automated machine learning operations powered by GitHub Actions</p>
+                <div class="hero-badges">
+                    <span class="badge badge-green" id="pipeline-status">Pipeline: Loading...</span>
+                    <span class="badge badge-blue" id="accuracy-badge">Accuracy: --</span>
+                    <span class="badge badge-purple" id="last-updated">Updated: --</span>
+                </div>
+                <div class="hero-actions">
+                    <a href="#pipeline" class="btn btn-primary">View Pipeline</a>
+                    <a href="https://github.com/bkiritom8/mlops-github-actions/actions" class="btn btn-secondary" target="_blank">Run Training</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="pipeline-animation">
+                    <div class="pipeline-node" data-step="1">Data</div>
+                    <div class="pipeline-arrow"></div>
+                    <div class="pipeline-node" data-step="2">Train</div>
+                    <div class="pipeline-arrow"></div>
+                    <div class="pipeline-node" data-step="3">Evaluate</div>
+                    <div class="pipeline-arrow"></div>
+                    <div class="pipeline-node" data-step="4">Deploy</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-value" id="total-runs">0</div>
+                    <div class="stat-label">Pipeline Runs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-value" id="current-accuracy">--%</div>
+                    <div class="stat-label">Model Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-value" id="f1-score">--%</div>
+                    <div class="stat-label">F1 Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-value" id="roc-auc">--</div>
+                    <div class="stat-label">ROC AUC</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pipeline Section -->
+        <section id="pipeline" class="section">
+            <h2 class="section-title">MLOps Pipeline</h2>
+            <p class="section-subtitle">Automated end-to-end machine learning workflow</p>
+
+            <div class="pipeline-stages">
+                <div class="stage-card">
+                    <div class="stage-header">
+                        <span class="stage-number">1</span>
+                        <h3>Data Ingestion</h3>
+                    </div>
+                    <div class="stage-content">
+                        <ul>
+                            <li>Load datasets (classification, iris, wine)</li>
+                            <li>Automatic data statistics calculation</li>
+                            <li>Data versioning support</li>
+                        </ul>
+                    </div>
+                    <div class="stage-status status-active">Active</div>
+                </div>
+
+                <div class="stage-card">
+                    <div class="stage-header">
+                        <span class="stage-number">2</span>
+                        <h3>Data Validation</h3>
+                    </div>
+                    <div class="stage-content">
+                        <ul>
+                            <li>Schema validation</li>
+                            <li>Data quality checks</li>
+                            <li>Target distribution analysis</li>
+                        </ul>
+                    </div>
+                    <div class="stage-status status-active">Active</div>
+                </div>
+
+                <div class="stage-card">
+                    <div class="stage-header">
+                        <span class="stage-number">3</span>
+                        <h3>Preprocessing</h3>
+                    </div>
+                    <div class="stage-content">
+                        <ul>
+                            <li>Feature scaling (Standard/MinMax)</li>
+                            <li>Missing value imputation</li>
+                            <li>Train/Val/Test splitting</li>
+                        </ul>
+                    </div>
+                    <div class="stage-status status-active">Active</div>
+                </div>
+
+                <div class="stage-card">
+                    <div class="stage-header">
+                        <span class="stage-number">4</span>
+                        <h3>Model Training</h3>
+                    </div>
+                    <div class="stage-content">
+                        <ul>
+                            <li>Multiple algorithms supported</li>
+                            <li>Cross-validation</li>
+                            <li>Hyperparameter tuning</li>
+                        </ul>
+                    </div>
+                    <div class="stage-status status-active">Active</div>
+                </div>
+
+                <div class="stage-card">
+                    <div class="stage-header">
+                        <span class="stage-number">5</span>
+                        <h3>Evaluation</h3>
+                    </div>
+                    <div class="stage-content">
+                        <ul>
+                            <li>Comprehensive metrics</li>
+                            <li>Confusion matrix</li>
+                            <li>ROC/PR curves</li>
+                        </ul>
+                    </div>
+                    <div class="stage-status status-active">Active</div>
+                </div>
+
+                <div class="stage-card">
+                    <div class="stage-header">
+                        <span class="stage-number">6</span>
+                        <h3>Deployment</h3>
+                    </div>
+                    <div class="stage-content">
+                        <ul>
+                            <li>Model artifact storage</li>
+                            <li>Inference pipeline</li>
+                            <li>REST API serving</li>
+                        </ul>
+                    </div>
+                    <div class="stage-status status-active">Active</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Metrics Section -->
+        <section id="metrics" class="section section-dark">
+            <h2 class="section-title">Model Metrics</h2>
+            <p class="section-subtitle">Real-time performance tracking</p>
+
+            <div class="metrics-container">
+                <div class="metrics-chart">
+                    <h3>Performance Overview</h3>
+                    <div class="chart-placeholder" id="performance-chart">
+                        <div class="metric-bar">
+                            <span class="metric-label">Accuracy</span>
+                            <div class="bar-container">
+                                <div class="bar-fill" id="accuracy-bar" style="width: 0%"></div>
+                            </div>
+                            <span class="metric-value" id="accuracy-value">--</span>
+                        </div>
+                        <div class="metric-bar">
+                            <span class="metric-label">Precision</span>
+                            <div class="bar-container">
+                                <div class="bar-fill" id="precision-bar" style="width: 0%"></div>
+                            </div>
+                            <span class="metric-value" id="precision-value">--</span>
+                        </div>
+                        <div class="metric-bar">
+                            <span class="metric-label">Recall</span>
+                            <div class="bar-container">
+                                <div class="bar-fill" id="recall-bar" style="width: 0%"></div>
+                            </div>
+                            <span class="metric-value" id="recall-value">--</span>
+                        </div>
+                        <div class="metric-bar">
+                            <span class="metric-label">F1 Score</span>
+                            <div class="bar-container">
+                                <div class="bar-fill" id="f1-bar" style="width: 0%"></div>
+                            </div>
+                            <span class="metric-value" id="f1-value">--</span>
+                        </div>
+                        <div class="metric-bar">
+                            <span class="metric-label">ROC AUC</span>
+                            <div class="bar-container">
+                                <div class="bar-fill" id="roc-bar" style="width: 0%"></div>
+                            </div>
+                            <span class="metric-value" id="roc-value">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metrics-details">
+                    <h3>Latest Run Details</h3>
+                    <div class="details-card">
+                        <div class="detail-item">
+                            <span class="detail-label">Run ID</span>
+                            <span class="detail-value" id="run-id">--</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Status</span>
+                            <span class="detail-value status-badge" id="run-status">--</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Timestamp</span>
+                            <span class="detail-value" id="run-timestamp">--</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Dataset</span>
+                            <span class="detail-value" id="run-dataset">classification</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Model Type</span>
+                            <span class="detail-value" id="run-model">random_forest</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="section">
+            <h2 class="section-title">MLOps Features</h2>
+            <p class="section-subtitle">Enterprise-grade machine learning operations</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>CI/CD Pipeline</h3>
+                    <p>Automated testing, linting, and deployment with GitHub Actions</p>
+                    <ul class="feature-list">
+                        <li>Multi-Python version testing</li>
+                        <li>Code quality checks</li>
+                        <li>Automated deployments</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Model Training</h3>
+                    <p>Flexible training pipeline with multiple algorithm support</p>
+                    <ul class="feature-list">
+                        <li>Random Forest</li>
+                        <li>Gradient Boosting</li>
+                        <li>Logistic Regression</li>
+                        <li>SVM</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Data Validation</h3>
+                    <p>Comprehensive data quality and schema validation</p>
+                    <ul class="feature-list">
+                        <li>Schema enforcement</li>
+                        <li>Missing value detection</li>
+                        <li>Distribution analysis</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Experiment Tracking</h3>
+                    <p>Track experiments, metrics, and model versions</p>
+                    <ul class="feature-list">
+                        <li>Metrics logging</li>
+                        <li>Artifact versioning</li>
+                        <li>Run comparison</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Model Serving</h3>
+                    <p>Production-ready inference pipeline</p>
+                    <ul class="feature-list">
+                        <li>Batch predictions</li>
+                        <li>Real-time inference</li>
+                        <li>Health checks</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">👁️</div>
+                    <h3>Monitoring</h3>
+                    <p>Continuous model and pipeline monitoring</p>
+                    <ul class="feature-list">
+                        <li>Performance tracking</li>
+                        <li>Drift detection</li>
+                        <li>Alerting</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- GitHub Actions Section -->
+        <section class="section section-dark">
+            <h2 class="section-title">GitHub Actions Workflows</h2>
+            <p class="section-subtitle">Automated workflows powering the MLOps pipeline</p>
+
+            <div class="workflows-grid">
+                <div class="workflow-card">
+                    <div class="workflow-header">
+                        <span class="workflow-icon">✅</span>
+                        <h3>CI Pipeline</h3>
+                    </div>
+                    <p>Continuous integration with testing and code quality checks</p>
+                    <div class="workflow-triggers">
+                        <span class="trigger-badge">push</span>
+                        <span class="trigger-badge">pull_request</span>
+                    </div>
+                </div>
+
+                <div class="workflow-card">
+                    <div class="workflow-header">
+                        <span class="workflow-icon">🏋️</span>
+                        <h3>Training Pipeline</h3>
+                    </div>
+                    <p>Automated model training with configurable parameters</p>
+                    <div class="workflow-triggers">
+                        <span class="trigger-badge">schedule</span>
+                        <span class="trigger-badge">workflow_dispatch</span>
+                    </div>
+                </div>
+
+                <div class="workflow-card">
+                    <div class="workflow-header">
+                        <span class="workflow-icon">🌐</span>
+                        <h3>Deploy Pages</h3>
+                    </div>
+                    <p>Automatic dashboard deployment to GitHub Pages</p>
+                    <div class="workflow-triggers">
+                        <span class="trigger-badge">push</span>
+                        <span class="trigger-badge">workflow_run</span>
+                    </div>
+                </div>
+
+                <div class="workflow-card">
+                    <div class="workflow-header">
+                        <span class="workflow-icon">📡</span>
+                        <h3>Monitoring</h3>
+                    </div>
+                    <p>Daily model health checks and performance monitoring</p>
+                    <div class="workflow-triggers">
+                        <span class="trigger-badge">schedule</span>
+                        <span class="trigger-badge">workflow_dispatch</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Start Section -->
+        <section class="section">
+            <h2 class="section-title">Quick Start</h2>
+            <p class="section-subtitle">Get started with the MLOps pipeline</p>
+
+            <div class="quickstart-container">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>Clone and Setup</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code># Clone the repository
+git clone https://github.com/bkiritom8/mlops-github-actions.git
+cd mlops-github-actions
+
+# Install dependencies
+pip install -r requirements.txt
+pip install -e .
+
+# Run the training pipeline
+python scripts/run_training.py --dataset classification --model random_forest</code></pre>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>Run Tests</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code># Run all tests
+pytest tests/ -v
+
+# Run with coverage
+pytest tests/ --cov=src --cov-report=html</code></pre>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>Trigger Training via GitHub Actions</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code># Go to Actions tab in GitHub repository
+# Select "ML Training Pipeline" workflow
+# Click "Run workflow"
+# Select dataset and model type
+# Click "Run workflow" button</code></pre>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>MLOps GitHub Actions</h4>
+                <p>End-to-end machine learning operations demonstration</p>
+            </div>
+            <div class="footer-section">
+                <h4>Links</h4>
+                <a href="https://github.com/bkiritom8/mlops-github-actions" target="_blank">GitHub Repository</a>
+                <a href="https://github.com/bkiritom8/mlops-github-actions/actions" target="_blank">Actions</a>
+            </div>
+            <div class="footer-section">
+                <h4>Technologies</h4>
+                <p>Python | scikit-learn | GitHub Actions | GitHub Pages</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Built with GitHub Actions | Deployed on GitHub Pages</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

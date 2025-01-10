@@ -1,0 +1,54 @@
+# MLOps Pipeline Configuration
+project:
+  name: "mlops-github-actions"
+  version: "1.0.0"
+  description: "End-to-end MLOps demonstration"
+
+data:
+  raw_path: "data/raw"
+  processed_path: "data/processed"
+  train_split: 0.8
+  validation_split: 0.1
+  test_split: 0.1
+  random_seed: 42
+
+model:
+  type: "random_forest"
+  artifacts_path: "models/artifacts"
+  hyperparameters:
+    n_estimators: 100
+    max_depth: 10
+    min_samples_split: 2
+    min_samples_leaf: 1
+    random_state: 42
+
+training:
+  epochs: 100
+  batch_size: 32
+  learning_rate: 0.001
+  early_stopping_patience: 10
+
+evaluation:
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1_score
+    - roc_auc
+  threshold: 0.5
+
+mlflow:
+  tracking_uri: "mlruns"
+  experiment_name: "mlops-demo"
+
+deployment:
+  model_registry_path: "models/registry"
+  serving_port: 5000
+  health_check_endpoint: "/health"
+  prediction_endpoint: "/predict"
+
+monitoring:
+  enable_drift_detection: true
+  drift_threshold: 0.1
+  performance_threshold: 0.85
+  alert_on_degradation: true
