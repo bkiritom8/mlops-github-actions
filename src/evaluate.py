@@ -35,7 +35,7 @@ def load_artifacts():
     model = joblib.load('models/model.joblib')
     scaler = joblib.load('models/scaler.joblib')
 
-    print("✓ Model and scaler loaded successfully")
+    print("[OK] Model and scaler loaded successfully")
     return model, scaler
 
 
@@ -56,7 +56,7 @@ def load_test_data():
         X, y, test_size=0.2, random_state=42, stratify=y
     )
 
-    print(f"✓ Loaded {len(X_test)} test samples")
+    print(f"[OK] Loaded {len(X_test)} test samples")
     return X_test, y_test
 
 
@@ -78,7 +78,7 @@ def generate_confusion_matrix_plot(y_true, y_pred, classes):
     plt.savefig(plot_path, dpi=100, bbox_inches='tight')
     plt.close()
 
-    print(f"✓ Confusion matrix saved to {plot_path}")
+    print(f"[OK] Confusion matrix saved to {plot_path}")
 
 
 def generate_feature_importance_plot(model, feature_names):
@@ -101,7 +101,7 @@ def generate_feature_importance_plot(model, feature_names):
         plt.savefig(plot_path, dpi=100, bbox_inches='tight')
         plt.close()
 
-        print(f"✓ Feature importance plot saved to {plot_path}")
+        print(f"[OK] Feature importance plot saved to {plot_path}")
 
 
 def check_model_performance(metrics, threshold=0.85):
@@ -111,10 +111,10 @@ def check_model_performance(metrics, threshold=0.85):
     accuracy = metrics['accuracy']
 
     if accuracy >= threshold:
-        print(f"✓ Model passed: Accuracy {accuracy:.4f} >= {threshold}")
+        print(f"[OK] Model passed: Accuracy {accuracy:.4f} >= {threshold}")
         return True
     else:
-        print(f"✗ Model failed: Accuracy {accuracy:.4f} < {threshold}")
+        print(f"[FAIL] Model failed: Accuracy {accuracy:.4f} < {threshold}")
         return False
 
 

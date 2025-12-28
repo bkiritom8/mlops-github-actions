@@ -17,7 +17,7 @@ def validate_data_schema(df):
     if df.shape[1] < required_min_cols:
         raise ValueError(f"Expected at least {required_min_cols} columns, got {df.shape[1]}")
 
-    print(f"✓ Schema validation passed - {df.shape[1]} columns found")
+    print(f"[OK] Schema validation passed - {df.shape[1]} columns found")
     return True
 
 
@@ -29,11 +29,11 @@ def check_missing_values(df):
     total_missing = missing.sum()
 
     if total_missing > 0:
-        print(f"⚠ Warning: Found {total_missing} missing values")
+        print(f"[WARNING] Warning: Found {total_missing} missing values")
         print(missing[missing > 0])
         return False
     else:
-        print("✓ No missing values found")
+        print("[OK] No missing values found")
         return True
 
 
@@ -46,10 +46,10 @@ def check_data_types(df):
     non_numeric = set(df.columns) - set(numeric_cols)
 
     if len(non_numeric) > 0:
-        print(f"⚠ Warning: Non-numeric columns found: {non_numeric}")
+        print(f"[WARNING] Warning: Non-numeric columns found: {non_numeric}")
         return False
     else:
-        print(f"✓ All {len(numeric_cols)} columns are numeric")
+        print(f"[OK] All {len(numeric_cols)} columns are numeric")
         return True
 
 
@@ -59,7 +59,7 @@ def check_data_ranges(df):
 
     # Check for infinite values
     if np.isinf(df.select_dtypes(include=[np.number])).any().any():
-        print("✗ Found infinite values in dataset")
+        print("[ERROR] Found infinite values in dataset")
         return False
 
     # Check for extreme outliers (values beyond 5 standard deviations)
@@ -68,10 +68,10 @@ def check_data_ranges(df):
     extreme_outliers = (z_scores > 5).any().any()
 
     if extreme_outliers:
-        print("⚠ Warning: Found extreme outliers (>5 std dev)")
+        print("[WARNING] Warning: Found extreme outliers (>5 std dev)")
         return False
     else:
-        print("✓ Data ranges are within acceptable bounds")
+        print("[OK] Data ranges are within acceptable bounds")
         return True
 
 
@@ -82,7 +82,7 @@ def check_minimum_samples(df, min_samples=100):
     if len(df) < min_samples:
         raise ValueError(f"Dataset too small: {len(df)} samples (minimum: {min_samples})")
 
-    print(f"✓ Dataset has {len(df)} samples")
+    print(f"[OK] Dataset has {len(df)} samples")
     return True
 
 
@@ -93,7 +93,7 @@ def validate_dataset(data_path='data/wine_data.csv'):
     print("=" * 50)
 
     if not os.path.exists(data_path):
-        print(f"✗ Error: Data file not found at {data_path}")
+        print(f"[ERROR] Error: Data file not found at {data_path}")
         return False
 
     # Load data
@@ -112,11 +112,11 @@ def validate_dataset(data_path='data/wine_data.csv'):
 
     print("\n" + "=" * 50)
     if all(checks):
-        print("✓ All Data Validation Checks Passed!")
+        print("[OK] All Data Validation Checks Passed!")
         print("=" * 50)
         return True
     else:
-        print("⚠ Some validation checks failed or have warnings")
+        print("[WARNING] Some validation checks failed or have warnings")
         print("=" * 50)
         return True  # Return True for warnings, only fail on errors
 

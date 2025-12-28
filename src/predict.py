@@ -52,7 +52,7 @@ def main():
     # Load model and scaler
     print("\nLoading model artifacts...")
     model, scaler = load_model_artifacts()
-    print("✓ Model loaded successfully")
+    print("[OK] Model loaded successfully")
 
     # Load wine dataset for class names
     wine = load_wine()

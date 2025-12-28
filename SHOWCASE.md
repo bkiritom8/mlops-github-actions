@@ -2,14 +2,14 @@
 
 This guide helps you present this project effectively for portfolios, interviews, and demonstrations.
 
-## 🎯 Project Highlights
+## Project Highlights
 
 ### Key Achievements
-- ✅ **Full CI/CD Pipeline**: Automated ML workflow from data validation to deployment
-- ✅ **CML Integration**: Automated model reporting in pull requests
-- ✅ **Test Coverage**: Comprehensive testing for data quality and model performance
-- ✅ **Production-Ready**: Follows MLOps best practices and industry standards
-- ✅ **Automated Deployment**: Simulates real-world ML deployment workflows
+- **Full CI/CD Pipeline**: Automated ML workflow from data validation to deployment
+- **CML Integration**: Automated model reporting in pull requests
+- **Test Coverage**: Comprehensive testing for data quality and model performance
+- **Production-Ready**: Follows MLOps best practices and industry standards
+- **Automated Deployment**: Simulates real-world ML deployment workflows
 
 ### Technical Skills Demonstrated
 - **DevOps**: GitHub Actions, CI/CD, automation
@@ -20,7 +20,7 @@ This guide helps you present this project effectively for portfolios, interviews
 
 ---
 
-## 📊 Live Demonstration Ideas
+## Live Demonstration Ideas
 
 ### 1. GitHub Actions Workflow Demo
 **What to show**: Real-time pipeline execution
@@ -91,7 +91,7 @@ jupyter notebook demo.ipynb
 
 ---
 
-## 🎤 Interview Talking Points
+## Interview Talking Points
 
 ### When asked about MLOps experience:
 
@@ -151,7 +151,7 @@ Walk through `.github/workflows/ml-pipeline.yml`:
 
 ---
 
-## 📸 Screenshots to Take
+## Screenshots to Take
 
 Capture these for your portfolio:
 
@@ -182,7 +182,7 @@ Capture these for your portfolio:
 
 ---
 
-## 🌐 Portfolio Presentation
+## Portfolio Presentation
 
 ### Project Description Template
 
@@ -219,10 +219,10 @@ practices for testing and validation.
 ### README Badges to Add
 
 Already added:
-- ✅ Build status
-- ✅ Python version
-- ✅ License
-- ✅ Code style
+- Build status
+- Python version
+- License
+- Code style
 
 Consider adding:
 - Test coverage badge
@@ -231,7 +231,7 @@ Consider adding:
 
 ---
 
-## 🎥 Video Demo Script
+## Video Demo Script
 
 **Introduction (30 seconds)**
 - "Hi, I'm [Name] and I built an automated MLOps pipeline"
@@ -263,7 +263,7 @@ Consider adding:
 
 ---
 
-## 📝 Resume Bullet Points
+## Resume Bullet Points
 
 **Machine Learning Engineer Project**
 - Designed and implemented end-to-end MLOps pipeline using GitHub Actions and CML, automating model training, validation, and deployment processes
@@ -276,7 +276,7 @@ MLOps, CI/CD, GitHub Actions, Python, scikit-learn, pytest, Docker, CML, automat
 
 ---
 
-## 🚀 Next Level Enhancements
+## Next Level Enhancements
 
 To make this project even more impressive:
 
@@ -324,7 +324,7 @@ To make this project even more impressive:
 
 ---
 
-## 🎓 Learning Outcomes
+## Learning Outcomes
 
 **What this project demonstrates**:
 - You understand production ML workflows
@@ -342,4 +342,4 @@ To make this project even more impressive:
 - Deploy ML models to production
 - Follow industry standards
 
-Good luck showcasing your project! 🚀
+Good luck showcasing your project!

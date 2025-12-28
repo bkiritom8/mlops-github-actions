@@ -106,7 +106,7 @@ def generate_report():
     print("Generated Artifacts")
     print("-" * 70)
     for artifact, exists in artifacts.items():
-        status = "✓ Found" if exists else "✗ Missing"
+        status = "[OK] Found" if exists else "[MISSING]"
         print(f"{artifact:30s}: {status}")
     print()
 
@@ -131,15 +131,15 @@ def generate_report():
     print("Key Features")
     print("-" * 70)
     features = [
-        "✓ Automated CI/CD pipeline with GitHub Actions",
-        "✓ Continuous Machine Learning (CML) integration",
-        "✓ Comprehensive data validation and quality checks",
-        "✓ Automated model training and evaluation",
-        "✓ Unit and integration testing with pytest",
-        "✓ Model performance visualization",
-        "✓ Makefile automation for common tasks",
-        "✓ Virtual environment support",
-        "✓ Deployment simulation workflow"
+        "- Automated CI/CD pipeline with GitHub Actions",
+        "- Continuous Machine Learning (CML) integration",
+        "- Comprehensive data validation and quality checks",
+        "- Automated model training and evaluation",
+        "- Unit and integration testing with pytest",
+        "- Model performance visualization",
+        "- Makefile automation for common tasks",
+        "- Virtual environment support",
+        "- Deployment simulation workflow"
     ]
     for feature in features:
         print(f"  {feature}")
@@ -182,13 +182,13 @@ def generate_report():
 
     # Check if trained
     if artifacts['Model file']:
-        print("Status: ✓ Model trained and ready")
+        print("Status: [OK] Model trained and ready")
         if metrics and metrics.get('accuracy', 0) >= 0.80:
-            print(f"Quality: ✓ Meets performance threshold (≥80%)")
+            print(f"Quality: [OK] Meets performance threshold (≥80%)")
         else:
-            print(f"Quality: ⚠ Below performance threshold (<80%)")
+            print(f"Quality: [WARNING] Below performance threshold (<80%)")
     else:
-        print("Status: ○ Model not trained yet")
+        print("Status: [ ] Model not trained yet")
         print("Action: Run 'make train' to train the model")
     print()
 

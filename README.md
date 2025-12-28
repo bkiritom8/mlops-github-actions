@@ -7,23 +7,23 @@
 
 A complete end-to-end MLOps project demonstrating automated machine learning workflows using GitHub Actions, CML (Continuous Machine Learning), and Makefile automation.
 
-**🎯 Live Demo**: [View GitHub Actions Runs](https://github.com/bkiritom8/mlops-github-actions/actions) |
-**📊 Model Performance**: Check the latest PR for automated CML reports |
-**📖 Documentation**: [Architecture](ARCHITECTURE.md) | [Showcase Guide](SHOWCASE.md)
+**Live Demo**: [View GitHub Actions Runs](https://github.com/bkiritom8/mlops-github-actions/actions) |
+**Model Performance**: Check the latest PR for automated CML reports |
+**Documentation**: [Architecture](ARCHITECTURE.md) | [Showcase Guide](SHOWCASE.md)
 
 ---
 
-## 🌟 Project Highlights
+## Project Highlights
 
 ### Key Features
-✨ **Fully Automated Pipeline** - Push code → Auto train → Auto evaluate → Auto deploy
-🤖 **CI/CD Integration** - GitHub Actions workflows for continuous ML operations
-📊 **CML Reports** - Automated model performance reports in pull requests
-🧪 **Comprehensive Testing** - Data validation, model quality, and integration tests
-📈 **Real-time Metrics** - Performance tracking with visualizations
-🎯 **Quality Gates** - 80% accuracy threshold prevents poor models from deployment
-🔄 **Reproducible** - Version-controlled code, configs, and workflows
-🚀 **Production-Ready** - Follows MLOps best practices and industry standards
+- **Fully Automated Pipeline** - Push code → Auto train → Auto evaluate → Auto deploy
+- **CI/CD Integration** - GitHub Actions workflows for continuous ML operations
+- **CML Reports** - Automated model performance reports in pull requests
+- **Comprehensive Testing** - Data validation, model quality, and integration tests
+- **Real-time Metrics** - Performance tracking with visualizations
+- **Quality Gates** - 80% accuracy threshold prevents poor models from deployment
+- **Reproducible** - Version-controlled code, configs, and workflows
+- **Production-Ready** - Follows MLOps best practices and industry standards
 
 ### What Makes This Project Stand Out
 - **End-to-End Automation**: No manual intervention needed - the entire workflow is automated
@@ -89,7 +89,7 @@ mlops-github-actions/
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/bkiritom8/mlops-github-actions.git
 cd mlops-github-actions
 
 # Run automated setup script
@@ -102,7 +102,7 @@ This creates a virtual environment, installs dependencies, and sets up the proje
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/bkiritom8/mlops-github-actions.git
 cd mlops-github-actions
 
 # Create virtual environment and install dependencies
@@ -118,7 +118,7 @@ venv\Scripts\activate     # Windows
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/bkiritom8/mlops-github-actions.git
 cd mlops-github-actions
 
 # Create virtual environment
@@ -409,4 +409,4 @@ This project is for educational purposes.
 
 ---
 
-**Built with ❤️ for learning MLOps**
+**Built for learning MLOps**
