@@ -79,7 +79,7 @@ test:
 	pytest tests/ -v --cov=src --cov-report=term-missing
 
 # Complete ML pipeline
-pipeline: validate-data train evaluate
+pipeline: train validate-data evaluate
 	@echo "ML Pipeline completed successfully!"
 
 # Run everything including tests
