@@ -52,18 +52,56 @@ mlops-github-actions/
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd mlops-github-actions
-   ```
+#### Option 1: Automated Setup (Recommended)
 
-2. **Install dependencies**
-   ```bash
-   make install
-   # or
-   pip install -r requirements.txt
-   ```
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd mlops-github-actions
+
+# Run automated setup script
+./setup.sh
+```
+
+This creates a virtual environment, installs dependencies, and sets up the project.
+
+#### Option 2: Manual Setup with Makefile
+
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd mlops-github-actions
+
+# Create virtual environment and install dependencies
+make setup
+
+# Activate virtual environment
+source venv/bin/activate  # macOS/Linux
+# or
+venv\Scripts\activate     # Windows
+```
+
+#### Option 3: Step-by-Step Manual Setup
+
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd mlops-github-actions
+
+# Create virtual environment
+python3 -m venv venv
+
+# Activate virtual environment
+source venv/bin/activate  # macOS/Linux
+# or
+venv\Scripts\activate     # Windows
+
+# Upgrade pip
+pip install --upgrade pip
+
+# Install dependencies
+pip install -r requirements.txt
+```
 
 ## Usage
 
