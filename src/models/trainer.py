@@ -1,6 +1,6 @@
 """Model training utilities for MLOps pipeline."""
+
 import numpy as np
-import pandas as pd
 from typing import Dict, Any, Optional, Tuple
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
@@ -192,9 +192,7 @@ class ModelTrainer:
 
         return results
 
-    def get_feature_importance(
-        self, feature_names: Optional[list] = None
-    ) -> Dict[str, float]:
+    def get_feature_importance(self, feature_names: Optional[list] = None) -> Dict[str, float]:
         """
         Get feature importance scores.
 
@@ -217,11 +215,13 @@ class ModelTrainer:
         if feature_names is None:
             feature_names = [f"feature_{i}" for i in range(len(importances))]
 
-        return dict(sorted(
-            zip(feature_names, importances),
-            key=lambda x: x[1],
-            reverse=True,
-        ))
+        return dict(
+            sorted(
+                zip(feature_names, importances),
+                key=lambda x: x[1],
+                reverse=True,
+            )
+        )
 
     def save_model(self, name: str = "model") -> Tuple[Path, Path]:
         """

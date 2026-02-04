@@ -1,10 +1,10 @@
 """Inference pipeline for model serving."""
+
 import numpy as np
 import pandas as pd
-from typing import Dict, Any, List, Optional, Union
+from typing import Dict, Any, List, Union
 from pathlib import Path
 from datetime import datetime
-import json
 
 from src.data.preprocessor import DataPreprocessor
 from src.models.trainer import ModelTrainer
@@ -101,11 +101,13 @@ class InferencePipeline:
 
         # Update statistics
         self.inference_count += len(predictions)
-        self.inference_history.append({
-            "timestamp": datetime.now().isoformat(),
-            "n_samples": len(predictions),
-            "inference_time_ms": inference_time,
-        })
+        self.inference_history.append(
+            {
+                "timestamp": datetime.now().isoformat(),
+                "n_samples": len(predictions),
+                "inference_time_ms": inference_time,
+            }
+        )
 
         return result
 
@@ -125,9 +127,7 @@ class InferencePipeline:
         result = self.predict(features, return_proba)
         return {
             "prediction": result["predictions"][0],
-            "probability": (
-                result["probabilities"][0] if result.get("probabilities") else None
-            ),
+            "probability": (result["probabilities"][0] if result.get("probabilities") else None),
             "inference_time_ms": result["inference_time_ms"],
         }
 

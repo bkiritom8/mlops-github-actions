@@ -1,4 +1,5 @@
 """Metrics reporting utilities for dashboard and monitoring."""
+
 import json
 from pathlib import Path
 from datetime import datetime
@@ -13,9 +14,7 @@ class MetricsReporter:
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
-    def collect_pipeline_metrics(
-        self, artifacts_dir: str = "models/artifacts"
-    ) -> Dict[str, Any]:
+    def collect_pipeline_metrics(self, artifacts_dir: str = "models/artifacts") -> Dict[str, Any]:
         """
         Collect all pipeline metrics from artifacts directory.
 
@@ -44,16 +43,18 @@ class MetricsReporter:
                 with open(result_file, "r") as f:
                     run_data = json.load(f)
                     eval_metrics = run_data.get("evaluation_metrics", {})
-                    metrics["runs"].append({
-                        "run_id": run_data.get("run_id"),
-                        "status": run_data.get("status"),
-                        "timestamp": run_data.get("timestamp"),
-                        "accuracy": eval_metrics.get("accuracy"),
-                        "f1_score": eval_metrics.get("f1_score"),
-                        "roc_auc": eval_metrics.get("roc_auc"),
-                        "precision": eval_metrics.get("precision"),
-                        "recall": eval_metrics.get("recall"),
-                    })
+                    metrics["runs"].append(
+                        {
+                            "run_id": run_data.get("run_id"),
+                            "status": run_data.get("status"),
+                            "timestamp": run_data.get("timestamp"),
+                            "accuracy": eval_metrics.get("accuracy"),
+                            "f1_score": eval_metrics.get("f1_score"),
+                            "roc_auc": eval_metrics.get("roc_auc"),
+                            "precision": eval_metrics.get("precision"),
+                            "recall": eval_metrics.get("recall"),
+                        }
+                    )
             except (json.JSONDecodeError, IOError):
                 continue
 
@@ -118,16 +119,12 @@ class MetricsReporter:
             json.dump(data, f, indent=2)
         return output_path
 
-    def generate_metrics_history(
-        self, max_runs: int = 50
-    ) -> List[Dict[str, Any]]:
+    def generate_metrics_history(self, max_runs: int = 50) -> List[Dict[str, Any]]:
         """Generate metrics history for trend charts."""
         metrics = self.collect_pipeline_metrics()
         return metrics.get("runs", [])[:max_runs]
 
-    def generate_badge_data(
-        self, metrics: Dict[str, Any]
-    ) -> Dict[str, Dict[str, str]]:
+    def generate_badge_data(self, metrics: Dict[str, Any]) -> Dict[str, Dict[str, str]]:
         """
         Generate data for status badges.
 
