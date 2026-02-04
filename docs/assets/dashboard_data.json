@@ -1,0 +1,44 @@
+{
+  "generated_at": "2024-01-15T14:30:22.000Z",
+  "project": {
+    "name": "MLOps GitHub Actions",
+    "version": "1.0.0",
+    "description": "End-to-end MLOps demonstration with GitHub Actions"
+  },
+  "pipeline": {
+    "total_runs": 1,
+    "latest_run": {
+      "run_id": "demo_run_001",
+      "status": "completed",
+      "timestamp": "2024-01-15T14:30:22.000Z",
+      "accuracy": 0.92,
+      "f1_score": 0.91,
+      "roc_auc": 0.96,
+      "precision": 0.93,
+      "recall": 0.90
+    },
+    "runs": [
+      {
+        "run_id": "demo_run_001",
+        "status": "completed",
+        "timestamp": "2024-01-15T14:30:22.000Z",
+        "accuracy": 0.92,
+        "f1_score": 0.91,
+        "roc_auc": 0.96
+      }
+    ]
+  },
+  "features": {
+    "data_validation": true,
+    "automated_training": true,
+    "model_evaluation": true,
+    "experiment_tracking": true,
+    "ci_cd": true,
+    "model_serving": true,
+    "monitoring": true
+  },
+  "environment": {
+    "python_version": "3.10+",
+    "runner": "ubuntu-latest"
+  }
+}
