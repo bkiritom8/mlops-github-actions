@@ -16,8 +16,9 @@ class MLOpsDashboard {
 
     async loadData() {
         try {
-            // Try to load dashboard data from JSON file
-            const response = await fetch('assets/dashboard_data.json');
+            // Try to load dashboard data from JSON file with cache busting
+            const cacheBuster = `?t=${Date.now()}`;
+            const response = await fetch(`assets/dashboard_data.json${cacheBuster}`);
             if (response.ok) {
                 this.data = await response.json();
                 console.log('Dashboard data loaded:', this.data);

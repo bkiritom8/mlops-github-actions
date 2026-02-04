@@ -1,25 +1,36 @@
 #!/usr/bin/env python3
 """Script to update the GitHub Pages dashboard data."""
+
 import argparse
 import sys
-import os
 import subprocess
+from pathlib import Path
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+# Ensure src is in path for both installed and development mode
+_script_dir = Path(__file__).parent.resolve()
+_project_root = _script_dir.parent
+if str(_project_root) not in sys.path:
+    sys.path.insert(0, str(_project_root))
 
-from src.utils.metrics_reporter import MetricsReporter
+from src.utils.metrics_reporter import MetricsReporter  # noqa: E402
 
 
 def get_git_info() -> dict:
     """Get current git information."""
     try:
-        commit = subprocess.check_output(
-            ["git", "rev-parse", "HEAD"], stderr=subprocess.DEVNULL
-        ).decode().strip()
+        commit = (
+            subprocess.check_output(["git", "rev-parse", "HEAD"], stderr=subprocess.DEVNULL)
+            .decode()
+            .strip()
+        )
 
-        branch = subprocess.check_output(
-            ["git", "rev-parse", "--abbrev-ref", "HEAD"], stderr=subprocess.DEVNULL
-        ).decode().strip()
+        branch = (
+            subprocess.check_output(
+                ["git", "rev-parse", "--abbrev-ref", "HEAD"], stderr=subprocess.DEVNULL
+            )
+            .decode()
+            .strip()
+        )
 
         return {
             "commit": commit,
@@ -66,7 +77,7 @@ def main():
 
     # Print summary
     if metrics.get("latest_run"):
-        print(f"\nLatest Run Summary:")
+        print("\nLatest Run Summary:")
         print(f"  Run ID: {metrics['latest_run'].get('run_id')}")
         print(f"  Status: {metrics['latest_run'].get('status')}")
         print(f"  Accuracy: {metrics['latest_run'].get('accuracy', 0):.4f}")

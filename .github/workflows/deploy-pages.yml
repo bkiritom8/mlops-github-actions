@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, 'claude/**']
     paths:
       - 'docs/**'
       - '.github/workflows/deploy-pages.yml'
@@ -26,17 +26,39 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+env:
+  # Set to 'true' to disable email notifications on deployment failures
+  SUPPRESS_FAILURE_NOTIFICATIONS: 'true'
+  # Alternative notification email (leave empty to skip email notifications entirely)
+  NOTIFICATION_EMAIL: ''
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Continue even if triggered by failed training run
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+
+    outputs:
+      dashboard_updated: ${{ steps.update_dashboard.outputs.updated }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
       - name: Install dependencies
         run: |
@@ -45,16 +67,56 @@ jobs:
           pip install -e .
 
       - name: Generate latest dashboard data
+        id: update_dashboard
         run: |
-          python scripts/update_dashboard.py || echo "No artifacts to process"
+          echo "Attempting to update dashboard data..."
+          if python scripts/update_dashboard.py; then
+            echo "Dashboard data updated successfully"
+            echo "updated=true" >> $GITHUB_OUTPUT
+          else
+            echo "::warning::Dashboard update script returned non-zero exit code. Using existing data."
+            echo "updated=false" >> $GITHUB_OUTPUT
+          fi
+        continue-on-error: true
+
+      - name: Validate dashboard files exist
+        run: |
+          echo "Validating required dashboard files..."
+
+          # Check for required files and directories
+          required_files=(
+            "docs/index.html"
+            "docs/assets/css/style.css"
+            "docs/assets/js/dashboard.js"
+          )
+
+          missing_files=()
+          for file in "${required_files[@]}"; do
+            if [[ ! -f "$file" ]]; then
+              missing_files+=("$file")
+            fi
+          done
+
+          if [[ ${#missing_files[@]} -gt 0 ]]; then
+            echo "::error::Missing required files: ${missing_files[*]}"
+            exit 1
+          fi
+
+          echo "All required files present"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Build with Jekyll (or static files)
+      - name: Ensure directory structure
         run: |
-          # Ensure docs directory exists with all needed files
+          # Ensure docs directory exists with all needed subdirectories
           mkdir -p docs/assets/css docs/assets/js docs/assets/images
+
+          # Create default dashboard_data.json if it doesn't exist
+          if [[ ! -f "docs/assets/dashboard_data.json" ]]; then
+            echo '{"generated_at":"'"$(date -Iseconds)"'","project":{"name":"MLOps GitHub Actions","version":"1.0.0"},"pipeline":{"total_runs":0,"latest_run":null},"features":{}}' > docs/assets/dashboard_data.json
+            echo "::notice::Created default dashboard_data.json"
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -67,7 +129,32 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Deployment success notification
+        if: success()
+        run: |
+          echo "::notice::GitHub Pages deployment successful!"
+          echo "Site URL: ${{ steps.deployment.outputs.page_url }}"
+
+  # Notify job - only runs on failures and respects notification settings
+  notify-failure:
+    runs-on: ubuntu-latest
+    needs: [build, deploy]
+    if: failure() && env.SUPPRESS_FAILURE_NOTIFICATIONS != 'true'
+
+    steps:
+      - name: Send failure notification
+        run: |
+          echo "::error::Deployment failed. Check the workflow logs for details."
+
+          # If NOTIFICATION_EMAIL is set and not empty, log the intended recipient
+          if [[ -n "${{ env.NOTIFICATION_EMAIL }}" ]]; then
+            echo "Notification would be sent to: ${{ env.NOTIFICATION_EMAIL }}"
+            # Note: To actually send emails, integrate with a service like SendGrid, AWS SES, etc.
+            # This prevents flooding the primary inbox
+          fi
