@@ -2,13 +2,16 @@
 """Script to run the training pipeline."""
 import argparse
 import sys
-import os
+from pathlib import Path
 
-# Add src to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+# Ensure src is in path for both installed and development mode
+_script_dir = Path(__file__).parent.resolve()
+_project_root = _script_dir.parent
+if str(_project_root) not in sys.path:
+    sys.path.insert(0, str(_project_root))
 
-from src.pipelines.training_pipeline import TrainingPipeline
-from src.utils.metrics_reporter import MetricsReporter
+from src.pipelines.training_pipeline import TrainingPipeline  # noqa: E402
+from src.utils.metrics_reporter import MetricsReporter  # noqa: E402
 
 
 def main():
@@ -64,11 +67,11 @@ def main():
 
     # Return exit code based on pipeline status
     if results.get("status") == "completed":
-        print(f"\nPipeline completed successfully!")
+        print("\nPipeline completed successfully!")
         print(f"Run ID: {results['run_id']}")
         return 0
     else:
-        print(f"\nPipeline failed!")
+        print("\nPipeline failed!")
         return 1
 
 

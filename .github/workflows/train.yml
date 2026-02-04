@@ -30,7 +30,7 @@ on:
 
   # Trigger on changes to training code
   push:
-    branches: [main]
+    branches: [main, 'claude/**']
     paths:
       - 'src/**'
       - 'configs/**'

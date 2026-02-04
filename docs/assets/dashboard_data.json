@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-04T03:24:42.367336",
+  "generated_at": "2026-02-04T19:35:17.947122",
   "project": {
     "name": "MLOps GitHub Actions",
     "version": "1.0.0",
@@ -14,7 +14,9 @@
         "timestamp": "2026-02-04T03:24:41.041430",
         "accuracy": 0.83,
         "f1_score": 0.8349514563106796,
-        "roc_auc": 0.8763505402160865
+        "roc_auc": 0.8763505402160865,
+        "precision": 0.8412698412698413,
+        "recall": 0.8287671232876712
       }
     ],
     "latest_run": {
@@ -23,7 +25,9 @@
       "timestamp": "2026-02-04T03:24:41.041430",
       "accuracy": 0.83,
       "f1_score": 0.8349514563106796,
-      "roc_auc": 0.8763505402160865
+      "roc_auc": 0.8763505402160865,
+      "precision": 0.8412698412698413,
+      "recall": 0.8287671232876712
     },
     "total_runs": 1
   },
@@ -35,6 +39,11 @@
     "ci_cd": true,
     "model_serving": true,
     "monitoring": true
+  },
+  "git": {
+    "commit": "938d7606671308c2b8e9a6b3c378974ecf116cf9",
+    "branch": "claude/github-pages-deployment-5zp5Y",
+    "short_commit": "938d760"
   },
   "environment": {
     "python_version": "3.9+",

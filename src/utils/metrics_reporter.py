@@ -43,13 +43,16 @@ class MetricsReporter:
             try:
                 with open(result_file, "r") as f:
                     run_data = json.load(f)
+                    eval_metrics = run_data.get("evaluation_metrics", {})
                     metrics["runs"].append({
                         "run_id": run_data.get("run_id"),
                         "status": run_data.get("status"),
                         "timestamp": run_data.get("timestamp"),
-                        "accuracy": run_data.get("evaluation_metrics", {}).get("accuracy"),
-                        "f1_score": run_data.get("evaluation_metrics", {}).get("f1_score"),
-                        "roc_auc": run_data.get("evaluation_metrics", {}).get("roc_auc"),
+                        "accuracy": eval_metrics.get("accuracy"),
+                        "f1_score": eval_metrics.get("f1_score"),
+                        "roc_auc": eval_metrics.get("roc_auc"),
+                        "precision": eval_metrics.get("precision"),
+                        "recall": eval_metrics.get("recall"),
                     })
             except (json.JSONDecodeError, IOError):
                 continue
